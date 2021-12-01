@@ -1,2 +1,3 @@
-day_nr: 01
-[]
+day_nr 01
+result_a 1184
+result_a 1158
