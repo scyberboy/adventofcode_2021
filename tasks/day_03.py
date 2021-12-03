@@ -3,16 +3,10 @@ import sys
 import os
 import re
 
-input_data = []
-
-filename = os.path.basename(__file__)
-day_nr = re.search(r"\d+", filename).group()
-print("day_nr", day_nr)
-
 
 def read_input():
     for line in sys.stdin:
-        input_data.append(int(line.strip()))
+        input_data.append(line.strip())
 
 
 def find_solution_a():
@@ -51,4 +45,9 @@ def do_main():
 
 if __name__ == "__main__":
     # execute only if run as a script
+
+    filename = os.path.basename(__file__)
+    day_nr = re.search(r"\d+", filename).group()
+    print("day_nr:", day_nr)
+
     do_main()

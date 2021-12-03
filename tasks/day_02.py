@@ -6,7 +6,7 @@ input_data = []
 
 filename = os.path.basename(__file__)
 day_nr = re.search(r"\d+", filename).group()
-print("day_nr", day_nr)
+print("day_nr:", day_nr)
 
 # forward(+) command
 horizontal = 0  # part a, b: +
@@ -76,13 +76,13 @@ def do_main():
     # print("horizontal:", horizontal, "depth:", depth)
 
     result_a = find_solution_a()
-    print("result_a", result_a)
+    print("result_a:", result_a)
     # print("horizontal:", horizontal, "depth:", depth)
 
     horizontal = 0
     depth = 0
     result_b = find_solution_b()
-    print("result_a", result_b)
+    print("result_b:", result_b)
 
 
 if __name__ == "__main__":
