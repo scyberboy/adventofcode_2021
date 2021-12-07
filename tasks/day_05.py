@@ -44,7 +44,7 @@ def count_overlapping_points(data, limit_val):
     # print("data:", data)
     # , format="%8d"
     # data.tofile("vents_map.txt", sep=" ")
-    np.savetxt("vents_map-savetxt.txt", data, fmt="%3d")
+    # np.savetxt("vents_map-savetxt.txt", data, fmt="%3d")
     # , formatter={'int_kind': lambda x: "%8d" % x}
     # data_str = np.array2string(data, max_line_width=3000, threshold=100000, edgeitems=1000)
     # print("data_str:", data_str)
@@ -56,7 +56,7 @@ def count_overlapping_points(data, limit_val):
     # print("my_cnt:", my_cnt)
 
     reduced_array = data[operator.gt(data, limit_val)]
-    np.savetxt("reduced_array-savetxt.txt", reduced_array, fmt="%3d")
+    # np.savetxt("reduced_array-savetxt.txt", reduced_array, fmt="%3d")
 
     elem_cnt = reduced_array.size
     # print("reduced_array:", reduced_array)
@@ -81,13 +81,25 @@ def fill_vents_map(empty_map, start_points, end_points):
     for idx in range(input_len):
         # 526,455 -> 590,455 - horizontal line (y1 == y2)
         # 134,976 -> 134,689 - vertical line (x1 == x2)
+        # 0,3 -> 3,0 - diagonal line
+        # ili po-gadnoto 3,0 -> 0,3
+        # ili 5,5 -> 10,0
+        # ne e syshtoto kato 0,0 -> 3,3
 
-        # lines may go in both directions so, check the coordinates and "normalize" them
+        # horizontal/vertical lines may go in both directions so, check the coordinates and "normalize" them
         # by assuring starting is always less than ending
-        sp_x = min(start_points[idx]["x"], end_points[idx]["x"])
-        sp_y = min(start_points[idx]["y"], end_points[idx]["y"])
-        ep_x = max(start_points[idx]["x"], end_points[idx]["x"])
-        ep_y = max(start_points[idx]["y"], end_points[idx]["y"])
+        if start_points[idx]["x"] == end_points[idx]["x"] \
+                or start_points[idx]["y"] == end_points[idx]["y"]:
+            sp_x = min(start_points[idx]["x"], end_points[idx]["x"])
+            sp_y = min(start_points[idx]["y"], end_points[idx]["y"])
+            ep_x = max(start_points[idx]["x"], end_points[idx]["x"])
+            ep_y = max(start_points[idx]["y"], end_points[idx]["y"])
+        else:
+            # consider diagonal will use them as is
+            sp_x = start_points[idx]["x"]
+            sp_y = start_points[idx]["y"]
+            ep_x = end_points[idx]["x"]
+            ep_y = end_points[idx]["y"]
 
         if sp_x == ep_x:
             # draw vertical
@@ -95,12 +107,30 @@ def fill_vents_map(empty_map, start_points, end_points):
                 new_map[sp_x][i] += 1
             # print("[{:4d}]\tdrawn ver line ({}, {}) -> ({}, {}): {}"
             #       .format(idx, sp_x, sp_y, ep_x, ep_y, new_map[sp_x][sp_y:ep_y+1]))
-        else:
+        elif sp_y == ep_y:
             # draw horizontal
             for i in range(sp_x, ep_x + 1):
                 new_map[i][sp_y] += 1
             # print("[{:4d}]\tdrawn hor line ({}, {}) -> ({}, {}): {}"
             #       .format(idx, sp_x, sp_y, ep_x, ep_y, new_map.transpose()[sp_y][sp_x:ep_x+1]))
+        else:
+            # diagonal
+            # 0,3 -> 3,0 - diagonal line
+            # ili 3,0 -> 0,3
+            # ili 5,5 -> 10,0
+            # print("got diagonal ({}, {}) -> ({}, {})".format(sp_x, sp_y, ep_x, ep_y))
+            x_pm_one = int((ep_x - sp_x) / abs(ep_x - sp_x))
+            x_range = list(range(sp_x, ep_x + x_pm_one, x_pm_one))
+            y_pm_one = int((ep_y - sp_y) / abs(ep_y - sp_y))
+            y_range = list(range(sp_y, ep_y + y_pm_one, y_pm_one))
+            # print("x_pm_one: {}, y_pm_one: {}".format(x_pm_one, y_pm_one))
+
+            # the ranges should be equal in length
+            if len(x_range) != len(y_range):
+                raise ValueError("len of diagonal ranges differ:\nx{}\ny{}".format(x_range, y_range))
+
+            for i in range(len(x_range)):
+                new_map[x_range[i]][y_range[i]] += 1
 
     return new_map
 
@@ -140,11 +170,43 @@ def find_solution_a(start_points, end_points):
     return answer
 
 
-def find_solution_b(data):
-    # Find the last winning board
+def find_solution_b(start_points, end_points):
+    # type: (list, list) -> int
+    """
+    Here, consider horizontal and vertical lines and exact diagonal.
+    Thus, filter only these where:
+        * (s[x] = e[x] or s[y] = e[y])
+        * abs(s[x] - e[x]) == abs(s[y] - e[y])
 
-    # print("answer: {} <- number: {}, sum_unmarked: {}".format(answer, last_winning_num, sum_unmarked))
-    pass
+    :return: Answer of the problem(a)
+    """
+
+    reduced_sp = [sp for _idx, sp in enumerate(start_points)
+                  if sp["x"] == end_points[_idx]["x"]
+                  or sp["y"] == end_points[_idx]["y"]
+                  or abs(sp["x"] - end_points[_idx]["x"]) == abs(sp["y"] - end_points[_idx]["y"])]
+    reduced_ep = [ep for _idx, ep in enumerate(end_points)
+                  if ep["x"] == start_points[_idx]["x"]
+                  or ep["y"] == start_points[_idx]["y"]
+                  or abs(start_points[_idx]["x"] - ep["x"]) == abs(start_points[_idx]["y"] - ep["y"])]
+
+    max_x = max([p["x"] for p in reduced_sp + reduced_ep])
+    max_y = max([p["y"] for p in reduced_sp + reduced_ep])
+
+    # print("Nr. reduced sp: {}, nr. reduced ep: {}".format(len(reduced_sp), len(reduced_ep)))
+    # print("max X: {}, max Y: {}".format(max_x, max_y))
+
+    empty_map = np.zeros((max_x + 1, max_y + 1), dtype=int)
+    # print(empty_map.shape)
+
+    filled_map = fill_vents_map(empty_map, reduced_sp, reduced_ep)
+    # print("filled_map:", filled_map.tolist())
+    # print("argmax(0):", filled_map.argmax(0))
+    # print("argmax(1):", filled_map.argmax(1))
+
+    answer = count_overlapping_points(filled_map, 1)
+
+    return answer
 
 
 def do_main():
@@ -158,8 +220,8 @@ def do_main():
     result_a = find_solution_a(start_points, end_points)
     print("result_a:", result_a)
 
-    # result_b = find_solution_b(vent_lines)
-    # print("result_b:", result_b)
+    result_b = find_solution_b(start_points, end_points)
+    print("result_b:", result_b)
 
 
 if __name__ == "__main__":
