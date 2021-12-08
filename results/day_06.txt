@@ -1,0 +1,3 @@
+day_nr: 06
+result_a: 343441
+result_b: 1569108373832
