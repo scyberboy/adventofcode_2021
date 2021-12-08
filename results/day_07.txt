@@ -1,0 +1,3 @@
+day_nr: 07
+result_a: 352331
+result_b: 99266250
