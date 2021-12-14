@@ -70,10 +70,12 @@ def generate_basin(height_map: np.array, x_y: (int, int)) -> list[(int, int)]:
     while len(candidates) > 0:
 
         # use DFS (depth first search) by simulating store in stack (FIFO)
-        # x_curr, y_curr = candidates.pop()
+        x_curr, y_curr = candidates.pop()
 
         # use BFS (breadth first search) by simulating store in queue (FILO)
-        x_curr, y_curr = candidates.popleft()
+        # x_curr, y_curr = candidates.popleft()
+        # NOTE: this is not optimal (maybe due to python implementation)
+        #       but that's the fact, BFS is 3 times slower than DFS
 
         # both methods should work
 
