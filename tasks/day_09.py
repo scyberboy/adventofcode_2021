@@ -2,7 +2,9 @@ import operator
 import os
 import re
 import sys
+import time
 
+from collections import deque
 from functools import reduce
 import numpy as np
 
@@ -40,6 +42,7 @@ def is_low_point(height_map: np.array, x_curr: int, y_curr: int) -> bool:
 
 def find_low_points(height_map: np.array) -> list[(int, int), int]:
     candidates = list()
+    # print("height map shape: {}".format(height_map.shape))
     x_dim, y_dim = height_map.shape
     for x_curr in range(1, x_dim - 1):
         for y_curr in range(1, y_dim - 1):
@@ -50,9 +53,7 @@ def find_low_points(height_map: np.array) -> list[(int, int), int]:
     return candidates
 
 
-def find_solution_a(data: list[list[int]]) -> int:
-    height_map = np.array(data)
-    low_points = find_low_points(height_map)
+def find_solution_a(low_points: list[(int, int), int]) -> int:
     answer = sum([elem[1] for elem in low_points]) + len(low_points)
 
     return answer
@@ -60,7 +61,7 @@ def find_solution_a(data: list[list[int]]) -> int:
 
 def generate_basin(height_map: np.array, x_y: (int, int)) -> list[(int, int)]:
     basin = set()
-    candidates = list()
+    candidates = deque()
 
     candidates.append(x_y)
 
@@ -68,7 +69,14 @@ def generate_basin(height_map: np.array, x_y: (int, int)) -> list[(int, int)]:
 
     while len(candidates) > 0:
 
-        x_curr, y_curr = candidates.pop()
+        # use DFS (depth first search) by simulating store in stack (FIFO)
+        # x_curr, y_curr = candidates.pop()
+
+        # use BFS (breadth first search) by simulating store in queue (FILO)
+        x_curr, y_curr = candidates.popleft()
+
+        # both methods should work
+
         basin.add((x_curr, y_curr))
 
         for x_off, y_off in neigh_offsets:
@@ -85,17 +93,13 @@ def generate_basin(height_map: np.array, x_y: (int, int)) -> list[(int, int)]:
     return list(basin)
 
 
-def find_solution_b(data: list[list[int]]) -> int:
-    height_map = np.array(data)
-    low_points = find_low_points(height_map)
+def find_solution_b(height_map: np.array, low_points: list[(int, int), int]) -> int:
     # print("low points: {}".format(low_points))
-    basins = list()
     basin_sizes = list()
     for x_y, _ in low_points:
         basin = generate_basin(height_map, x_y)
         if len(basin) > 0:
-            basins.append(basin)
-            basin_sizes.append((len(basin)))
+            basin_sizes.append(len(basin))
 
     answer = reduce(operator.mul, sorted(basin_sizes, reverse=True)[:3], 1)
 
@@ -103,15 +107,42 @@ def find_solution_b(data: list[list[int]]) -> int:
 
 
 def do_main():
+
+    prev_time = time.process_time()
+
+    print("start reading input...")
     data = read_input()
+    cur_time = time.process_time()
+    diff = cur_time - prev_time
+    prev_time = cur_time
+    print("[{}] took: {} sec.".format(cur_time, diff))
 
     # print("input data: {}".format(data))
 
-    result_a = find_solution_a(data)
-    print("result_a:", result_a)
+    print("generate low points...")
+    height_map = np.array(data)
+    low_points = find_low_points(height_map)
+    cur_time = time.process_time()
+    diff = cur_time - prev_time
+    prev_time = cur_time
+    print("[{}] took: {} sec.".format(cur_time, diff))
 
-    result_b = find_solution_b(data)
+    print("find_solution_a...")
+    result_a = find_solution_a(low_points)
+    print("result_a:", result_a)
+    cur_time = time.process_time()
+    diff = cur_time - prev_time
+    prev_time = cur_time
+    print("[{}] took: {} sec.".format(cur_time, diff))
+
+    print("find_solution_b...")
+    result_b = find_solution_b(height_map, low_points)
     print("result_b:", result_b)
+    cur_time = time.process_time()
+    diff = cur_time - prev_time
+    # prev_time = cur_time
+    print("[{}] took: {} sec.".format(cur_time, diff))
+
 
 
 if __name__ == "__main__":
