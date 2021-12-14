@@ -1,0 +1,3 @@
+day_nr: 09
+result_a: 452
+result_b: 1263735
