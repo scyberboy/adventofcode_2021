@@ -1,0 +1,9 @@
+day_nr: 11
+start reading input...
+[0.03125] took: 0.0 sec.
+find_solution_a...
+result_a: 1739
+[0.03125] took: 0.0 sec.
+find_solution_b...
+result_b: 324
+[0.046875] took: 0.015625 sec.
