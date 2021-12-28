@@ -1,100 +1,100 @@
 day_nr: 13
 start reading input...
-[0.125] took: 0.0 sec.
+[0.109375] took: 0.0 sec.
 input instructions: [(0, 655), (1, 447), (0, 327), (1, 223), (0, 163), (1, 111), (0, 81), (1, 55), (0, 40), (1, 27), (1, 13), (1, 6)]
 nr True elems in trans_map:
 923
 find_solution_a...
 size(1170723) map_to_fold.shape: (893, 1311)
 size(1170723) new_map.shape: (893, 1311)
-diff: 655, axis: 0, value: 655
+axis: 0, value: 655
 min_y: 0, max_y: 893
 min_x: 0, max_x: 655
 folded map, size: 584915, shape: (893, 655), max_y: 893, max_x: 655
 will count thru folded map(1)(2), max_y: 893, max_x: 655
 result_a: 781
-[0.34375] took: 0.21875 sec.
+[0.328125] took: 0.21875 sec.
 find_solution_b...
 size(1170723) map_to_fold.shape: (893, 1311)
 size(1170723) new_map.shape: (893, 1311)
-diff: 655, axis: 0, value: 655
+axis: 0, value: 655
 min_y: 0, max_y: 893
 min_x: 0, max_x: 655
 folded map, size: 584915, shape: (893, 655), max_y: 893, max_x: 655
 size(584915) map_to_fold.shape: (893, 655)
 size(584915) new_map.shape: (893, 655)
-diff: 445, axis: 1, value: 447
-min_y: 2, max_y: 447
+axis: 1, value: 447
+min_y: 0, max_y: 447
 min_x: 0, max_x: 655
 folded map, size: 292785, shape: (447, 655), max_y: 447, max_x: 655
 size(292785) map_to_fold.shape: (447, 655)
 size(292785) new_map.shape: (447, 655)
-diff: 327, axis: 0, value: 327
+axis: 0, value: 327
 min_y: 0, max_y: 447
 min_x: 0, max_x: 327
 folded map, size: 146169, shape: (447, 327), max_y: 447, max_x: 327
 size(146169) map_to_fold.shape: (447, 327)
 size(146169) new_map.shape: (447, 327)
-diff: 223, axis: 1, value: 223
+axis: 1, value: 223
 min_y: 0, max_y: 223
 min_x: 0, max_x: 327
 folded map, size: 72921, shape: (223, 327), max_y: 223, max_x: 327
 size(72921) map_to_fold.shape: (223, 327)
 size(72921) new_map.shape: (223, 327)
-diff: 163, axis: 0, value: 163
+axis: 0, value: 163
 min_y: 0, max_y: 223
 min_x: 0, max_x: 163
 folded map, size: 36349, shape: (223, 163), max_y: 223, max_x: 163
 size(36349) map_to_fold.shape: (223, 163)
 size(36349) new_map.shape: (223, 163)
-diff: 111, axis: 1, value: 111
+axis: 1, value: 111
 min_y: 0, max_y: 111
 min_x: 0, max_x: 163
 folded map, size: 18093, shape: (111, 163), max_y: 111, max_x: 163
 size(18093) map_to_fold.shape: (111, 163)
 size(18093) new_map.shape: (111, 163)
-diff: 81, axis: 0, value: 81
+axis: 0, value: 81
 min_y: 0, max_y: 111
 min_x: 0, max_x: 81
 folded map, size: 8991, shape: (111, 81), max_y: 111, max_x: 81
 size(8991) map_to_fold.shape: (111, 81)
 size(8991) new_map.shape: (111, 81)
-diff: 55, axis: 1, value: 55
+axis: 1, value: 55
 min_y: 0, max_y: 55
 min_x: 0, max_x: 81
 folded map, size: 4455, shape: (55, 81), max_y: 55, max_x: 81
 size(4455) map_to_fold.shape: (55, 81)
 size(4455) new_map.shape: (55, 81)
-diff: 40, axis: 0, value: 40
+axis: 0, value: 40
 min_y: 0, max_y: 55
 min_x: 0, max_x: 40
 folded map, size: 2200, shape: (55, 40), max_y: 55, max_x: 40
 size(2200) map_to_fold.shape: (55, 40)
 size(2200) new_map.shape: (55, 40)
-diff: 27, axis: 1, value: 27
+axis: 1, value: 27
 min_y: 0, max_y: 27
 min_x: 0, max_x: 40
 folded map, size: 1080, shape: (27, 40), max_y: 27, max_x: 40
 size(1080) map_to_fold.shape: (27, 40)
 size(1080) new_map.shape: (27, 40)
-diff: 13, axis: 1, value: 13
+axis: 1, value: 13
 min_y: 0, max_y: 13
 min_x: 0, max_x: 40
 folded map, size: 520, shape: (13, 40), max_y: 13, max_x: 40
 size(520) map_to_fold.shape: (13, 40)
 size(520) new_map.shape: (13, 40)
-diff: 6, axis: 1, value: 6
+axis: 1, value: 6
 min_y: 0, max_y: 6
 min_x: 0, max_x: 40
 folded map, size: 240, shape: (6, 40), max_y: 6, max_x: 40
 will count thru folded map(12)(13), max_y: 6, max_x: 40
 ---------- solution b (last)--------------
-[[ True  True  True  True False  True  True  True  True False  True  True  True  True False  True  True  True False False False  True  True False False False False  True  True False  True  True  True  True False  True  True  True False False]
- [ True  True False  True False  True False False False False  True False  True  True False  True False False  True False  True False  True  True False False False False  True False  True  True  True False False  True False False  True False]
- [ True  True  True  True False  True  True  True  True False  True False  True  True False  True False False  True False  True False  True  True False  True False False  True False  True  True  True  True False  True  True  True False False]
- [ True  True  True False False  True  True  True  True False  True False  True  True False  True False  True  True False  True  True  True  True False False  True  True  True False  True  True  True False False  True  True  True  True False]
- [ True False False  True False  True False False False False  True False  True False False  True False False  True False  True False False  True False  True False False  True False  True False False False False  True  True  True  True False]
- [ True False False False False  True  True  True  True False  True  True  True  True False  True  True  True False False  True  True  True  True False False  True  True  True False  True  True  True False False  True  True  True  True False]]
+[[ True  True  True False False  True  True  True  True False  True  True  True False False False  True  True False False False  True  True False False False False  True  True False  True  True  True False False  True  True  True False False]
+ [ True False False  True False  True False False False False  True False False  True False  True False False  True False  True False False  True False False False False  True False  True False False  True False  True False False  True False]
+ [ True False False  True False  True  True  True False False  True False False  True False  True False False False False  True False False False False False False False  True False  True False False  True False  True  True  True False False]
+ [ True  True  True False False  True False False False False  True  True  True False False  True False False False False  True False  True  True False False False False  True False  True  True  True False False  True False False  True False]
+ [ True False False False False  True False False False False  True False  True False False  True False False  True False  True False False  True False  True False False  True False  True False False False False  True False False  True False]
+ [ True False False False False  True  True  True  True False  True False False  True False False  True  True False False False  True  True  True False False  True  True False False  True False False False False  True  True  True False False]]
 ------------------------------------
-result_b: 138
-[0.65625] took: 0.3125 sec.
+result_b: 99
+[0.640625] took: 0.3125 sec.
