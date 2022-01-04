@@ -1,9 +1,9 @@
 day_nr: 08
 start reading input...
-[0.125] took: 0.0 sec.
+[0.03125] took: 0.0 sec.
 find_solution_a...
 result_a: 255
-[0.125] took: 0.0 sec.
+[0.03125] took: 0.0 sec.
 find_solution_b...
-result_b: None
-[0.125] took: 0.0 sec.
+result_b: 982158
+[0.71875] took: 0.6875 sec.
